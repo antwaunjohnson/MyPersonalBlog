@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyPersonalBlog.Models;
@@ -29,4 +30,8 @@ public class Blog
 
     [NotMapped]
     public IFormFile? Image { get; set; }
+
+    public virtual IdentityUser? Author { get; set; }
+    public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+
 }
