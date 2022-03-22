@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MyPersonalBlog.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,7 +26,8 @@ public class Post
     [Display(Name = "Updated Date")]
     public DateTime? Updated { get; set; }
 
-    public bool IsPublished { get; set; }
+    public ReadyStatus ReadyStatus { get; set; }
+
 
     public string? Slug { get; set; }
 
