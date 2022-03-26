@@ -31,7 +31,7 @@ public class Blog
     [NotMapped]
     public IFormFile? Image { get; set; }
 
-    public virtual BlogUser? Author { get; set; }
+    public virtual BlogUser Author { get; set; } = null!;
     public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
 
 }
