@@ -49,7 +49,6 @@ namespace MyPersonalBlog.Controllers
         // GET: Blogs/Create
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -57,8 +56,8 @@ namespace MyPersonalBlog.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,AuthorId,Name,Description,Created,Updated,ImageData,ContentType")] Blog blog)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name,Description,Image")] Blog blog)
         {
             if (ModelState.IsValid)
             {
