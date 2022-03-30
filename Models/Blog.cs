@@ -16,7 +16,7 @@ public class Blog
     public string? Description { get; set; }
     [DataType(DataType.Date)]
     [Display(Name = "Created Date")]
-    public DateTime? Created { get; set; }
+    public DateTime Created { get; set; }
 
     [DataType(DataType.Date)]
     [Display(Name = "Updated Date")]
@@ -31,7 +31,7 @@ public class Blog
     [NotMapped]
     public IFormFile? Image { get; set; }
 
-    public virtual BlogUser Author { get; set; } = null!;
+    public virtual BlogUser? Author { get; set; }
     public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
 
 }
