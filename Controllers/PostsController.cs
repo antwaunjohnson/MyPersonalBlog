@@ -60,15 +60,17 @@ namespace MyPersonalBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,BlogId,AuthorId,Title,Abstract,Content,Created,Updated,ReadyStatus,Slug,ImageData,ContentType")] Post post)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
         {
             if (ModelState.IsValid)
             {
+                post.Created = DateTime.Now;
+
+
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
             ViewData["BlogId"] = new SelectList(_context.Blogs, "BlogId", "Name", post.BlogId);
             return View(post);
         }
@@ -86,7 +88,6 @@ namespace MyPersonalBlog.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
             ViewData["BlogId"] = new SelectList(_context.Blogs, "BlogId", "Name", post.BlogId);
             return View(post);
         }
@@ -96,7 +97,7 @@ namespace MyPersonalBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,AuthorId,Title,Abstract,Content,Created,Updated,ReadyStatus,Slug,ImageData,ContentType")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
         {
             if (id != post.PostId)
             {
@@ -107,6 +108,8 @@ namespace MyPersonalBlog.Controllers
             {
                 try
                 {
+                    post.Updated = DateTime.Now;
+
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
