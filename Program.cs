@@ -3,31 +3,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyPersonalBlog.Data;
 using MyPersonalBlog.Models;
+using MyPersonalBlog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration["ConnectionString"];
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //options.UseSqlServer(connectionString));
-// builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
-   // .AddEntityFrameworkStores<ApplicationDbContext>();
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-   // options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
+
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<DataService>();
+
 var app = builder.Build();
+
+var dataService = app.Services
+                     .CreateScope()
+                     .ServiceProvider
+                     .GetRequiredService<DataService>();
+
+await dataService.ManageDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
