@@ -36,7 +36,7 @@ public class HomeController : Controller
    public async Task<IActionResult> Contact(ContactMe model)
     {
         
-        await _emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
+        await _emailSender.SendContactEmailAsync(model.Email!, model.Name!, model.Subject!, model.Message!);
         return RedirectToAction("Index");
     }
 
