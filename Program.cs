@@ -28,6 +28,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+builder.Services.AddScoped<IImageService, BasicImageService>();
+builder.Services.AddScoped<ISlugService, BasicSlugService>();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
