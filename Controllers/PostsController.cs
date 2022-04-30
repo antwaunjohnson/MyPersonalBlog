@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,13 @@ namespace MyPersonalBlog.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ISlugService _slugService;
         private readonly IImageService _imageService;
-
-        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService)
+        private readonly UserManager<BlogUser> _userManager;
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService, UserManager<BlogUser> userManager)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
+            _userManager = userManager;
         }
 
         // GET: Posts
@@ -43,6 +45,7 @@ namespace MyPersonalBlog.Controllers
             var post = await _context.Posts
                 .Include(p => p.Author)
                 .Include(p => p.Blog)
+                .Include(p => p.Tags)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {
@@ -71,10 +74,13 @@ namespace MyPersonalBlog.Controllers
             {
                 post.Created = DateTime.Now;
 
+                var authorId = _userManager.GetUserId(User);
+                post.AuthorId = authorId;
+
                 post.ImageData = await _imageService.EncodeImageAsync(post.Image);
                 post.ContentType = _imageService.ContentType(post.Image);
 
-                // Create teh slug and determine if it is unique
+                // Create the slug and determine if it is unique
                 var slug = _slugService.UrlFriendly(post.Title);
                 if (!_slugService.IsUnique(slug))
                 {
@@ -86,6 +92,17 @@ namespace MyPersonalBlog.Controllers
                 post.Slug = slug;
 
                 _context.Add(post);
+                await _context.SaveChangesAsync();
+
+                foreach(var tag in tagValues)
+                {
+                    _context.Add(new Tag()
+                    {
+                        PostId = post.PostId,
+                        AuthorId = authorId,
+                        Text = tag
+                    });
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
