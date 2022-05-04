@@ -119,12 +119,13 @@ namespace MyPersonalBlog.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.PostId == id);
             if (post == null)
             {
                 return NotFound();
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "BlogId", "Name", post.BlogId);
+            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
             return View(post);
         }
 
@@ -133,7 +134,7 @@ namespace MyPersonalBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
         {
             if (id != post.PostId)
             {
@@ -144,7 +145,7 @@ namespace MyPersonalBlog.Controllers
             {
                 try
                 {
-                    var newPost = await _context.Posts.FindAsync(post.PostId);
+                    var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.PostId == post.PostId);
                     newPost.Updated = DateTime.Now;
                     newPost.Title = post.Title;
                     newPost.Abstract = post.Abstract;
@@ -154,7 +155,20 @@ namespace MyPersonalBlog.Controllers
                     {
                         newPost.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newPost.ContentType = _imageService.ContentType(newImage);
-                    }                    
+                    }
+
+                    _context.Tags.RemoveRange(newPost.Tags);
+
+                    foreach(var tag in tagValues)
+                    {
+                        _context.Tags.Add(new Tag()
+                        {
+                            PostId = post.PostId,
+                            AuthorId = newPost.AuthorId,
+                            Text = tag
+                        });
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
