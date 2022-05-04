@@ -5,7 +5,7 @@ function AddTag() {
     let newOption = new Option(tagEntry.value, tagEntry.value);
     document.getElementById("TagList").options[index++] = newOption;
 
-    tagEntry.value = ""
+    tagEntry.value = "";
     return true;
 }
 
@@ -25,6 +25,10 @@ function DeleteTag() {
     }
 }
 
+//$("form").on("submit", function() {
+//    $("#Taglist option").prop("selected", "selected");
+//})
+
 $("form").on("submit", function () {
-    $("#Taglist option").prop("selected", "selected");
+    $("#TagList option").prop("selected", "selected");
 })

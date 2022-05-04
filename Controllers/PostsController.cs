@@ -104,6 +104,7 @@ namespace MyPersonalBlog.Controllers
                     });
                 }
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "BlogId", "Name", post.BlogId);
