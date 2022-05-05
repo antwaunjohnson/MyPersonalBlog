@@ -16,7 +16,7 @@ public class Blog
     public string? Description { get; set; }
     [DataType(DataType.Date)]
     [Display(Name = "Created Date")]
-    public DateTime? Created { get; set; }
+    public DateTime Created { get; set; }
 
     [DataType(DataType.Date)]
     [Display(Name = "Updated Date")]
