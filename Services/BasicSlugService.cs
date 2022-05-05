@@ -13,7 +13,7 @@ public class BasicSlugService : ISlugService
 
     public bool IsUnique(string slug)
     {
-        return !_dbContext.Posts!.Any(p => p.Slug == slug);
+        return !_dbContext.Posts.Any(cp => cp.Slug == slug);
     }
 
     public string UrlFriendly(string title)
