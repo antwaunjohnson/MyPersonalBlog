@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -48,6 +49,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Posts
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Posts.Include(p => p.Author).Include(p => p.Blog);
@@ -96,6 +98,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
@@ -167,6 +170,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Posts/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -261,6 +265,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

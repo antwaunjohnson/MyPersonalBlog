@@ -28,6 +28,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Blogs
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Blogs.Include(b => b.Author);
@@ -54,7 +55,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Blogs/Create
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -82,6 +83,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Blogs/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -147,6 +149,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Blogs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
