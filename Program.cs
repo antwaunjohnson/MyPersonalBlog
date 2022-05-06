@@ -27,6 +27,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<DataService>();
+builder.Services.AddScoped<BlogSearchService>();
 builder.Services.AddScoped<IBlogEmailSender, EmailService>();
 builder.Services.AddScoped<IImageService, BasicImageService>();
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
