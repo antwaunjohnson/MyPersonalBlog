@@ -13,6 +13,7 @@ using MyPersonalBlog.Enums;
 using MyPersonalBlog.Models;
 using MyPersonalBlog.Services;
 using X.PagedList;
+using MyPersonalBlog.ViewModels;
 
 namespace MyPersonalBlog.Controllers
 {
@@ -56,6 +57,7 @@ namespace MyPersonalBlog.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        
         public async Task<IActionResult> BlogPostIndex(int? id, int? page)
         {
             if(id is null)
@@ -79,23 +81,53 @@ namespace MyPersonalBlog.Controllers
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(string slug)
         {
-            if (string.IsNullOrEmpty(slug))
-            {
-                return NotFound();
-            }
+            ViewData["Title"] = "Post Details Page";
+            if (string.IsNullOrEmpty(slug)) return NotFound();
 
             var post = await _context.Posts
                 .Include(p => p.Author)
-                .Include(p => p.Blog)
                 .Include(p => p.Tags)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Author)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Moderator)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
-            if (post == null)
-            {
-                return NotFound();
-            }
 
-            return View(post);
+            if (post == null) return NotFound();
+
+            var dataVM = new PostDetailViewModel()
+            {
+                Post = post,
+                Tags = _context.Tags
+                .Select(t => t.Text.ToLower())
+                .Distinct().ToList()
+            };
+            ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
+            ViewData["MainText"] = post.Title;
+            ViewData["SubText"] = post.Abstract;
+            return View(dataVM);
         }
+        //public async Task<IActionResult> Details(string slug)
+        //{
+        //    if (string.IsNullOrEmpty(slug))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var post = await _context.Posts
+        //        .Include(p => p.Author)
+        //        .Include(p => p.Blog)
+        //        .Include(p => p.Tags)
+        //        .Include(p => p.Comments)
+        //        .ThenInclude(c => c.Author)
+        //        .FirstOrDefaultAsync(m => m.Slug == slug);
+        //    if (post == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(post);
+        //}
 
         // GET: Posts/Create
         [Authorize(Roles = "Administrator")]
@@ -170,7 +202,7 @@ namespace MyPersonalBlog.Controllers
         }
 
         // GET: Posts/Edit/5
-        [Authorize(Roles = "Administrator")]
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -193,6 +225,7 @@ namespace MyPersonalBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
         {
             if (id != post.PostId)

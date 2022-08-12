@@ -10,8 +10,8 @@ public class ApplicationDbContext : IdentityDbContext<BlogUser>
     {
     }
 
-    public DbSet<Blog>? Blogs { get; set; }
-    public DbSet<Post>? Posts { get; set; }
-    public DbSet<Comment>? Comments { get; set; }
-    public DbSet<Tag>? Tags { get; set; }
+    public DbSet<Blog> Blogs { get; set; } = null!;
+    public DbSet<Post> Posts { get; set; } = null!;
+    public DbSet<Comment> Comments { get; set; } = null!;
+    public DbSet<Tag> Tags { get; set; } = null!;
 }

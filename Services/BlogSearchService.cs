@@ -20,13 +20,13 @@ public class BlogSearchService
         {
             searchTerm = searchTerm.ToLower();
             posts = posts.Where(
-                p => p.Title.ToLower().Contains(searchTerm) ||
-                     p.Abstract.ToLower().Contains(searchTerm) ||
-                     p.Content.ToLower().Contains(searchTerm) ||
-                     p.Comments.Any(c => c.Body.ToLower().Contains(searchTerm) ||
-                                         c.ModeratedBody.ToLower().Contains(searchTerm) ||
-                                         c.Author.FirstName.ToLower().Contains(searchTerm) ||
-                                         c.Author.LastName.ToLower().Contains(searchTerm) ||
+                p => p.Title!.ToLower().Contains(searchTerm) ||
+                     p.Abstract!.ToLower().Contains(searchTerm) ||
+                     p.Content!.ToLower().Contains(searchTerm) ||
+                     p.Comments!.Any(c => c.Body!.ToLower().Contains(searchTerm) ||
+                                         c.ModeratedBody!.ToLower().Contains(searchTerm) ||
+                                         c.Author!.FirstName!.ToLower().Contains(searchTerm) ||
+                                         c.Author.LastName!.ToLower().Contains(searchTerm) ||
                                          c.Author.Email.ToLower().Contains(searchTerm)));
         }
         return posts.OrderByDescending(p => p.Created); 

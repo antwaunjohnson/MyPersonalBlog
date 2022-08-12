@@ -1,55 +1,96 @@
 ﻿@using MyPersonalBlog.Models
+@using MyPersonalBlog.Services
+@using MyPersonalBlog.Enums
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
+@inject IImageService _imageService
+@inject UserManager<BlogUser> _userManager
+
 @model IPagedList<Blog>
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container px-4 px-lg-5">
-	<div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-          <!-- Post preview-->
-          @foreach (var blog in Model)
-          {
-              <div class="post-preview">
-                  <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.BlogId">
-                      <h2 class="post-title">@blog.Name</h2>
-                      <h3 class="post-subtitle">@blog.Description</h3>
-                  </a>
-                  <p class="post-meta">
-                      Authored by by
-                      <a href="#!">@blog.Author.FullName</a>
-                      on @blog.Created.ToString("MMMM dd, yyyy")
-                  </p>
-              </div>
-              <!-- Divider-->
-              <hr class="my-4" />
-          }
 
+<div class="row">
 
-          <!-- Pager-->
-          <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
-      </div>
-	</div>
+    @foreach (var blog in Model)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
+            <div class="card border-primary">
+                <img src="@_imageService.DecodeImage(blog.ImageData!, blog.ContentType!)" alt="" class="card-img-top" />
+                <div class="card-body text-center">
+                    <div class="card-title-bg">
+                        <hr class="card-hr" />
+                        <h5 class="card-title">@blog.Name</h5>
+                        <hr class="card-hr" />
+                    </div>
+                    <div>
+                        <p class="card-text cftooltip"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title=""
+                           data-original-title="@blog.Description">@blog.Description</p>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <a class="btn btn-read btn-sm note-btn-block mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.BlogId">Read Posts</a>
+                    </div>
+
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-primary btn-sm note-btn-block mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog.BlogId">Create Post</a>
+                        </div>
+                    }
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-dark btn-edit btn-sm note-btn-block mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.BlogId">Edit Blog</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
-<!-- Add Paging controls here-->
 <div class="row">
     <div class="col h3">
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+            new PagedListRenderOptions
+            {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+            })
+    </div>
 </div>
 
 <div class="row">
-    <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-         new PagedListRenderOptions
-         {
-             LiElementClasses = new string[] { "page-item" },
-             PageClasses = new string[] { "page-link" }
-         })
-    </div>
+    
 </div>
+
+@section Scripts {
+<script>
+    var swalMsg = '@TempData["SweetAlert"]'
+    if (swalMsg != "") {
+        Swal.fire({
+            icon: 'success',
+            title: swalMsg,
+            timer: 2500
+        })
+    }
+
+    $(document).ready(function () {
+        $("p").tooltip();
+    });
+</script>
+
+}

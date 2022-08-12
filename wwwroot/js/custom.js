@@ -77,10 +77,10 @@ function search(str) {
     }
 }
 
-const swalWithDarkButton = Swal.mixin({
-    customClass: {
-        confirmButton: 'btn btn-danger btn-sm btn-outline-dark'
-    },
-    timer: 3000,
-    buttonsStyling: false
-});
+//const swalWithDarkButton = Swal.mixin({
+//    customClass: {
+//        confirmButton: 'btn btn-danger btn-sm btn-outline-dark'
+//    },
+//    timer: 3000,
+//    buttonsStyling: false
+//});

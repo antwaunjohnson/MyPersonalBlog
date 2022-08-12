@@ -17,7 +17,7 @@
         <div class="col-md-2 col-lg-4 mt-3">
             <div class="card border-dark">
                 <div class="card-body text-center">
-                    <div class="bg-warning">
+                    <div class="card-title-bg">
                         <hr class="card-hr" />
                         <h5 class="card-title">@post.Title</h5>
                         <hr class="card-hr" />
@@ -28,11 +28,11 @@
 
                     <br />
                     <div class="text-center d-grid">
-                        <a class="btn btn-dark btn-sm mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
+                        <a class="btn btn-read btn-sm mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
                     </div>
 
                 </div>
-                <img class="card-img-bottom" src="@imageService.DecodeImage(post.ImageData,  post.ContentType)" />
+                <img class="card-img-bottom" src="@imageService.DecodeImage(post.ImageData!,  post.ContentType!)" />
             </div>
 
         </div>

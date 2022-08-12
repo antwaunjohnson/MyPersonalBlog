@@ -1,32 +1,32 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-	<title>@ViewData["Title"] - MyPersonalBlog</title>
+    <title>@ViewData["Title"] - Antwaun Blogs</title>
 
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-	<!-- Font Awesome icons (free version)-->
-	<script src="//use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<!-- Google fonts-->
-	<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="//use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
 
 
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="~/css/styles.css" rel="stylesheet" />
-	<link href="~/css/custom.css" rel="stylesheet" />
-	<!-- Summernote CSS Reference -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <!-- Summernote CSS Reference -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 <body>
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
+			<a class="navbar-brand" asp-controller="Home" asp-action="Index">Antwaun Blogs</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 				Menu
 				<i class="fas fa-bars"></i>
@@ -49,18 +49,18 @@
 		</div>
 	</nav>
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url('/img/home-bg.jpg')">
+	<header class="masthead" style="background-image: url(@ViewData["HeaderImage"])">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1>Clean Blog</h1>
-						<span class="subheading">A Blog Theme by Start Bootstrap</span>
+						<h1>@ViewData["MainText"]</h1>
+						<span class="subheading">@ViewData["SubText"]</span>
             <form asp-action="SearchIndex" asp-controller="Posts">
                 <div class="input-group input-group-sm mt-5">
                     <input type="text" name="SearchTerm" class="form-control rounded-start" placeholder="Search Term"/>
                     <div class="input-group-append d-grid">
-                        <button class="btn btn-warning btn-sm rounded-end" type="submit">Search</button>
+                        <button class="btn btn-warning rounded-end" type="submit">Search</button>
 										</div>
 								</div>
 						</form>
@@ -91,7 +91,7 @@
 							<a href="#!">
 								<span class="fa-stack fa-lg">
 									<i class="fas fa-circle fa-stack-2x"></i>
-									<i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+									<i class="fab fa-linkedin-in fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
@@ -104,7 +104,7 @@
 							</a>
 						</li>
 					</ul>
-					<div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2022</div>
+					<div class="small text-center text-muted fst-italic">Copyright &copy; Antwaun Blogs 2022</div>
 				</div>
 			</div>
 		</div>
