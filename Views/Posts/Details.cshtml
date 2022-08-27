@@ -87,7 +87,7 @@
 @foreach (var comment in Model.Post.Comments!.OrderByDescending(c => c.Created))
 {
     <div class="media p-3 mb-2 bg-cf media-border">
-        <img class="mr-right m-3 img-thumbnail" style="width:60px; height:60px;" src="@imageService.DecodeImage(comment.Author?.ImageData!, comment.Author?.ContentType!)" alt="@comment.Author?.DisplayName" />
+        <img class="mr-right m-3 img-thumbnail" src="@imageService.DecodeImage(comment.Author?.ImageData!, comment.Author?.ContentType!)" alt="@comment.Author?.DisplayName" />
         <div class="flex-grow-1">
             <h4>@comment.Author?.DisplayName</h4>
            @if(comment.Deleted is not null)
@@ -142,11 +142,11 @@
                     @comment.Body
                 }
 
-            @if (comment.Moderated is null && comment.Deleted is null && comment.AuthorId == userManager.GetUserId(User))
+            @*@if (comment.Moderated is null && comment.Deleted is null && comment.AuthorId == userManager.GetUserId(User))
             {
                 
                 <button data-bs-toggle="modal" data-bs-target="#editModal-@(comment.CommentId)" class="btn btn-sm btn-edit float-end fw-bold">EDIT</button>
-            }
+            }*@
 
             @if (User.IsInRole(BlogRole.Administrator.ToString()) && comment.Deleted is null)
             {
@@ -219,7 +219,7 @@
 
                         <div class="form-group">
                             <label class="control-label">Reason For Moderation</label>
-                            <select class="form-control" asp-form="@comment.ModerationType" name="ModerationType" asp-items="Html.GetEnumSelectList<ModerationType>()"><option>Moderation Type...</option></select>
+                            <select class="form-control" asp-for="@comment.ModerationType" name="ModerationType" asp-items="Html.GetEnumSelectList<ModerationType>()"></select>
                         </div>
 
                         <div class="form-group">

@@ -32,7 +32,15 @@ namespace MyPersonalBlog.Controllers
         }
         public async Task<IActionResult> ModeratedIndex()
         {
-            var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
+            var moderatedComments = await _context.Comments
+                .Where(c => c.Moderated != null)
+                .Include(c => c.Post)
+                .Include(c => c.Author)
+                .ToListAsync();
+
+            ViewData["MainText"] = "Comments";
+            ViewData["SubText"] = "All Moderated Comments";
+
             return View("Index", moderatedComments);
         }
         //public async Task<IActionResult> DeletedIndex()
@@ -90,50 +98,49 @@ namespace MyPersonalBlog.Controllers
                 .FirstOrDefaultAsync();
             if (comment == null) return NotFound();
 
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", comment.AuthorId);
-            ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Abstract", comment.PostId);
+            ViewData["ModerationType"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
+
             return View(comment);
         }
 
         // POST: Comments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int commentid, [Bind("CommentId,Body")] Comment comment)
-        {
-            if (commentid != comment.CommentId)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int commentid, [Bind("CommentId,Body")] Comment comment)
+        //{
+        //    if (commentid != comment.CommentId)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                var newComment = await _context.Comments.Include(c => c.Post).FirstOrDefaultAsync(c => c.CommentId == comment.CommentId);
-                try
-                {
-                    newComment.Body = comment.Body;
-                    newComment.Updated = DateTime.Now;
+        //    if (ModelState.IsValid)
+        //    {
+        //        var newComment = await _context.Comments.Include(c => c.Post).FirstOrDefaultAsync(c => c.CommentId == comment.CommentId);
+        //        try
+        //        {
+        //            newComment.Body = comment.Body;
+        //            newComment.Updated = DateTime.Now;
 
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CommentExists(comment.CommentId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
-            }
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!CommentExists(comment.CommentId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
+        //    }
             
-            return View(comment);
-        }
+        //    return View(comment);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

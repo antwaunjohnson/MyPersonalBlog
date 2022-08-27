@@ -10,10 +10,10 @@ public class Blog
     public string? AuthorId { get; set; }
     [Required]
     [StringLength(150, ErrorMessage = "The {0} must be at least {2} and have a maximum of {1} characters", MinimumLength = 5)]
-    public string? Name { get; set; }
+    public string? Name { get; set; } = null!;
 
     [StringLength(500, ErrorMessage = "The {0} must be at least {2} and have a maximum of {1} characters", MinimumLength = 5)]
-    public string? Description { get; set; }
+    public string? Description { get; set; } = null!;
     [DataType(DataType.Date)]
     [Display(Name = "Created Date")]
     public DateTime Created { get; set; }
@@ -23,10 +23,10 @@ public class Blog
     public DateTime? Updated { get; set; }
 
     [Display(Name = "Blog Image")]
-    public byte[]? ImageData { get; set; }
+    public byte[]? ImageData { get; set; } = null!;
 
     [Display(Name = "Image Type")]
-    public string? ContentType { get; set; }
+    public string? ContentType { get; set; } = null!;
 
     [NotMapped]
     public IFormFile? Image { get; set; }

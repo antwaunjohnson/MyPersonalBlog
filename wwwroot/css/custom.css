@@ -63,6 +63,7 @@ header.masthead .site-heading{
     border: 1px solid #21897e;
     height: 80px !important;
     width: 80px !important;
+   /* transform: rotate(90deg);*/
     /*border-radius: 10px;*/
     background-color: transparent;
 }

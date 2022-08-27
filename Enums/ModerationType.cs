@@ -5,15 +5,15 @@ namespace MyPersonalBlog.Enums;
 public enum ModerationType
 {
     [Description("Violent speech")]
-    Violence,
+    Violence = 0,
     [Description("Offensive language")]
-    Language,
+    Language = 1,
     [Description("Drug references")]
-    Drugs,
+    Drugs = 2,
     [Description("Sexual references")]
-    Sexual,
+    Sexual = 3,
     [Description("Threating speech")]
-    Threatening,
+    Threatening = 4,
     [Description("Political references")]
-    Political
+    Political = 5
 }

@@ -22,11 +22,11 @@
     {
         <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
             <div class="card border-primary">
-                <img src="@_imageService.DecodeImage(blog.ImageData!, blog.ContentType!)" alt="" class="card-img-top" />
+                <img src="@_imageService.DecodeImage(blog.ImageData!, blog?.ContentType!)" alt="" class="card-img-top" />
                 <div class="card-body text-center">
                     <div class="card-title-bg">
                         <hr class="card-hr" />
-                        <h5 class="card-title">@blog.Name</h5>
+                        <h5 class="card-title">@blog?.Name</h5>
                         <hr class="card-hr" />
                     </div>
                     <div>
@@ -34,23 +34,23 @@
                            data-toggle="tooltip"
                            data-placement="top"
                            title=""
-                           data-original-title="@blog.Description">@blog.Description</p>
+                           data-original-title="@blog?.Description">@blog?.Description</p>
                     </div>
                     <br />
                     <div class="text-center">
-                        <a class="btn btn-read btn-sm note-btn-block mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.BlogId">Read Posts</a>
+                        <a class="btn btn-read btn-sm note-btn-block mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog?.BlogId">Read Posts</a>
                     </div>
 
                     @if (User.IsInRole(BlogRole.Administrator.ToString()))
                     {
                         <div class="text-center">
-                            <a class="btn btn-primary btn-sm note-btn-block mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog.BlogId">Create Post</a>
+                            <a class="btn btn-primary btn-sm note-btn-block mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog?.BlogId">Create Post</a>
                         </div>
                     }
                     @if (User.IsInRole(BlogRole.Administrator.ToString()))
                     {
                         <div class="text-center">
-                            <a class="btn btn-dark btn-edit btn-sm note-btn-block mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.BlogId">Edit Blog</a>
+                            <a class="btn btn-dark btn-edit btn-sm note-btn-block mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog?.BlogId">Edit Blog</a>
                         </div>
                     }
                 </div>
