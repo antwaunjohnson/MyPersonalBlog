@@ -54,7 +54,7 @@ public class DataService
 
         string email = _configuration["SeedUserConfig:Email"];
         string userName = _configuration["SeedUserConfig:Email"];
-        string password = _configuration["SeedUserConfig:Password"]
+        string password = _configuration["SeedUserConfig:Password"];
 
         var adminUser = new BlogUser()
         {
