@@ -11,12 +11,13 @@ public class DataService
     private readonly ApplicationDbContext _dbContext;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<BlogUser> _userManager;
-
-    public DataService(ApplicationDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<BlogUser> userManager)
+    private readonly IConfiguration _configuration;
+    public DataService(ApplicationDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<BlogUser> userManager, IConfiguration configuration)
     {
         _dbContext = dbContext;
         _roleManager = roleManager;
         _userManager = userManager;
+        _configuration = configuration;
     }
 
     public async Task ManageDataAsync()
@@ -51,10 +52,14 @@ public class DataService
             return;
         }
 
+        string email = _configuration["SeedUserConfig:Email"];
+        string userName = _configuration["SeedUserConfig:Email"];
+        string password = _configuration["SeedUserConfig:Password"]
+
         var adminUser = new BlogUser()
         {
-            Email = "antwaundoescode@gmail.com",
-            UserName = "antwaundoescode@gmail.com",
+            Email = email,
+            UserName = userName,
             FirstName = "Antwaun",
             LastName = "Johnson",
             DisplayName = "AntwaunCodes",
