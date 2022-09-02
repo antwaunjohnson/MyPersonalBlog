@@ -66,7 +66,7 @@ public class DataService
             EmailConfirmed = true
         };
 
-        await _userManager.CreateAsync(adminUser, "Abc&123!");
+        await _userManager.CreateAsync(adminUser, password);
 
         await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
     }     
