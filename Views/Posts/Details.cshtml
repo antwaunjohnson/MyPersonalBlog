@@ -17,10 +17,10 @@
 
 <article class="mb-4">
     <div class="row">
-        <div class="col-9 border-">
+        <div class="col-9 text-sm-center border-">
             @Html.Raw(Model.Post!.Content)
         </div>
-        <div class="col-3 text-center font-weight-bold h6">
+        <div class="d-none d-lg-block col-3 text-center font-weight-bold h6">
             <div class="card">
                 <img src="/img/contact-bg.jpg" alt="Tags..." class="card-img-top" />
                 <div class="card-body">
@@ -142,11 +142,11 @@
                     @comment.Body
                 }
 
-            @*@if (comment.Moderated is null && comment.Deleted is null && comment.AuthorId == userManager.GetUserId(User))
+            @if (comment.Moderated is null && comment.Deleted is null && comment.AuthorId == userManager.GetUserId(User))
             {
                 
                 <button data-bs-toggle="modal" data-bs-target="#editModal-@(comment.CommentId)" class="btn btn-sm btn-edit float-end fw-bold">EDIT</button>
-            }*@
+            }
 
             @if (User.IsInRole(BlogRole.Administrator.ToString()) && comment.Deleted is null)
             {

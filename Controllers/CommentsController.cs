@@ -145,7 +145,7 @@ namespace MyPersonalBlog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Moderate(int commentid, [Bind("CommentId,Body,ModeratedBody,ModertionType")]Comment comment)
+        public async Task<IActionResult> Moderate(int commentid, [Bind("CommentId,Body,ModeratedBody,ModerationType")]Comment comment)
         {
             if(commentid != comment.CommentId)
             {
