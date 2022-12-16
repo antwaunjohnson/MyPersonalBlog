@@ -163,7 +163,7 @@ abbr[data-bs-original-title] {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
   cursor: help;
-  -webkit-text-decoration-skip-ink: none;
+  text-decoration-skip-ink: none;
           text-decoration-skip-ink: none;
 }
 
@@ -7541,7 +7541,7 @@ textarea.form-control-lg {
 
 .bg-warning {
     --bs-bg-opacity: 1;
-    background-color: rgb(105,209,197), var(--bs-bg-opacity)) !important;
+    background-color: rgb(105,209,197), var(--bs-bg-opacity) !important;
 }
 
 .bg-danger {
