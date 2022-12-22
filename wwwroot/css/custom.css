@@ -38,6 +38,7 @@
     padding-top: 18px !important;
 }
 
+
 /*CUSTOM MEDIA OBJECT BORDER*/
 .media-border {
     border: 2px solid #3ba99c;
@@ -86,6 +87,14 @@ header.masthead .site-heading {
 /*SUMMERNOTE*/
 .note-editable, .note-placeholder {
     font-size: 22px;
+}
+
+/*ABOUT IMG STYLES*/
+.about-img {
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 15px 0px #69d1c5;
 }
 
 /*BUTTON STYLES*/

@@ -3126,6 +3126,7 @@ textarea.form-control-lg {
         color: #000;
         background-color: #69D1C5;
         border-color: #69D1C5;
+        outline: 2px solid #99fff3;
     }
 
 .btn-check:focus + .btn-warning, .btn-warning:focus {
@@ -11124,14 +11125,14 @@ footer {
 }
 
 header.masthead {
-  position: relative;
-  margin-bottom: 3rem;
-  padding-top: calc(8rem + 57px);
-  padding-bottom: 8rem;
-  background: no-repeat center center;
-  background-color: #6c757d;
-  background-size: cover;
-  background-attachment: scroll;
+    position: relative;
+    margin-bottom: 3rem;
+    padding-top: calc(8rem + 57px);
+    padding-bottom: 8rem;
+    background: no-repeat center  center url("../img/bram-naus-n8Qb1ZAkK88-unsplash.jpg");
+    background-color: #6c757d;
+    background-size: cover;
+    background-attachment: scroll;
 }
 header.masthead:before {
   content: "";
@@ -11141,7 +11142,7 @@ header.masthead:before {
   right: 0;
   bottom: 0;
   background-color: #415250;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 header.masthead .page-heading,
 header.masthead .post-heading,
