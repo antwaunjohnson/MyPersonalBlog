@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyPersonalBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221213062118_database_refresh")]
-    partial class database_refresh
+    [Migration("20230117020855_update_seeddata")]
+    partial class update_seeddata
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

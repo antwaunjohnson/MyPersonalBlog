@@ -52,14 +52,12 @@ public class DataService
             return;
         }
 
-        string email = _configuration["SeedUserConfig:Email"];
-        string userName = _configuration["SeedUserConfig:Email"];
-        string password = _configuration["SeedUserConfig:Password"];
+ 
 
         var adminUser = new BlogUser()
         {
-            Email = email,
-            UserName = userName,
+            Email = "antwaundoescode@gmail.com",
+            UserName = "antwaundoescode@gmail.com",
             FirstName = "Antwaun",
             LastName = "Johnson",
             DisplayName = "AntwaunCodes",

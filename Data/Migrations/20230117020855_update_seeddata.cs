@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MyPersonalBlog.Data.Migrations
 {
-    public partial class database_refresh : Migration
+    public partial class update_seeddata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
