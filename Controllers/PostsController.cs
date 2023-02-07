@@ -226,9 +226,9 @@ namespace MyPersonalBlog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
+        public async Task<IActionResult> Edit(string slug, [Bind("PostId,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
         {
-            if (id != post.PostId)
+            if (slug != post.Slug)
             {
                 return NotFound();
             }
